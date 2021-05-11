@@ -37,6 +37,22 @@ class CardView extends React.Component {
       }).start();
     }
   }
+  correctPressed = () => {
+    const { dispatch, deckInfo, displayCount } = this.props
+    // save answerselected in backend
+    // store quiz completion date
+    // evaluate count with question.length
+    // display results screen if last question
+    // if not navigate to next screen
+  }
+  incorrectPressed = () => {
+    const { dispatch, deckInfo, displayCount } = this.props
+    // save answerselected in backend
+    // evaluate count with question.length
+    // store quiz completion date
+    // display results screen if last question
+    // if not navigate to next screen
+  }
   render() {
     const frontAnimatedStyle = {
       transform: [
@@ -48,7 +64,7 @@ class CardView extends React.Component {
         { rotateY: this.backInterpolate }
       ]
     }
-    const { dispatch, deckInfo } = this.props
+    const { dispatch, deckInfo, displayCount } = this.props
     if (deckInfo.questions.length === 0) {
         return (
           <View style={styles.container}>
@@ -58,21 +74,27 @@ class CardView extends React.Component {
     }
     return (
       <View style={styles.container}>
+        <View>
+          <Text>{(displayCount+1)} / {deckInfo.questions.length}</Text>
+        </View>
+        <View>
+          <Animated.View style={[styles.flipCard, frontAnimatedStyle]}>
+            <Text>Question: {deckInfo.questions[displayCount].question}</Text>
+            <Text>Answer: {deckInfo.questions[displayCount].answer}</Text>
+          </Animated.View>
+          <Animated.View style={[backAnimatedStyle, styles.flipCard, styles.flipCardBack]}>
+            <Text>The question answer pair is Correct!</Text>
+          </Animated.View>
+        </View>
         <TouchableOpacity onPress={() => this.flipCard()}>
           <Text>SHOW ANSWER</Text>
         </TouchableOpacity>
-        <View>
-          <Animated.View style={[styles.flipCard, frontAnimatedStyle]}>
-            <Text style={styles.flipText}>
-            Front text flip
-            </Text>
-          </Animated.View>
-          <Animated.View style={[backAnimatedStyle, styles.flipCard, styles.flipCardBack]}>
-            <Text style={styles.flipText}>
-            Back text flip
-            </Text>
-          </Animated.View>
-        </View>
+        <TouchableOpacity onPress={() => this.correctPressed}>
+          <Text>CORRECT</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={() => this.incorrectPressed}>
+          <Text>INCORRECT</Text>
+        </TouchableOpacity>
       </View>
     )
   }
@@ -101,8 +123,6 @@ const styles = StyleSheet.create({
 
 function mapStateToProps (state, { route }) {
   const { entryId, displayCount } = route.params;
-  console.log('title_CV: ', entryId)
-  console.log('count_CV: ', displayCount)
   return {
     entryId,
     displayCount,

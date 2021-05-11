@@ -14,6 +14,7 @@ import DeckView from './components/DeckView'
 import AddDeck from './components/AddDeck'
 import AddCard from './components/AddCard'
 import CardView from './components/CardView'
+import QuizResults from './components/QuizResults'
 
 const Tab = createBottomTabNavigator();
 
@@ -100,8 +101,17 @@ export default class App extends React.Component {
                   headerStyle: {
                     backgroundColor: purple
                   },
-                  title: route.params.entryId,
-                  headerTitle: route.params.entryId
+                  title: 'Quiz'
+                })} />
+            <Stack.Screen
+                name="QuizResults"
+                component={QuizResults}
+                options={({ route }) => ({
+                  headerTintColor: white,
+                  headerStyle: {
+                    backgroundColor: purple
+                  },
+                  title: 'Quiz'
                 })} />
           </Stack.Navigator>
         </View>

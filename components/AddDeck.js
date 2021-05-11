@@ -16,10 +16,8 @@ class AddDeck extends React.Component {
   onPress = () => {
     const {dispatch} = this.props
     saveDeckTitle(this.state.query)
-    .then(() => dispatch(save_Deck_Title(this.state.query)))
-    .then(() => {
-      this.props.navigation.dispatch(CommonActions.goBack());
-    })
+    dispatch(save_Deck_Title(this.state.query))
+    this.props.navigation.dispatch(CommonActions.goBack())
   }
   render() {
     return (
