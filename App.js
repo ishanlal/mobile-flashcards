@@ -13,6 +13,7 @@ import Decks from './components/Decks'
 import DeckView from './components/DeckView'
 import AddDeck from './components/AddDeck'
 import AddCard from './components/AddCard'
+import CardView from './components/CardView'
 
 const Tab = createBottomTabNavigator();
 
@@ -83,6 +84,17 @@ export default class App extends React.Component {
             <Stack.Screen
                 name="AddCard"
                 component={AddCard}
+                options={({ route }) => ({
+                  headerTintColor: white,
+                  headerStyle: {
+                    backgroundColor: purple
+                  },
+                  title: route.params.entryId,
+                  headerTitle: route.params.entryId
+                })} />
+            <Stack.Screen
+                name="CardView"
+                component={CardView}
                 options={({ route }) => ({
                   headerTintColor: white,
                   headerStyle: {

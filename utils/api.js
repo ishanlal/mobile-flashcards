@@ -58,3 +58,13 @@ export function saveAnswerSelected (title, answer) { //where answer = {ans: 'Cor
       AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(data))
     })
 }
+
+export function clearAnswerSelected (title) { //where answer = {ans: 'Correct/Incorrect'}
+  console.log('inside AsyncStorage')
+  return AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY)
+    .then((results) => {
+      const data = JSON.parse(results);
+      data[title].answersSelected.splice(0,data[title].answersSelected.length);
+      AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(data))
+    })
+}

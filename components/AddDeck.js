@@ -15,8 +15,6 @@ class AddDeck extends React.Component {
   }
   onPress = () => {
     const {dispatch} = this.props
-    console.log('inside on press!')
-    console.log('calling async call')
     saveDeckTitle(this.state.query)
     .then(() => dispatch(save_Deck_Title(this.state.query)))
     .then(() => {

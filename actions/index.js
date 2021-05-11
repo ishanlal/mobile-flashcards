@@ -3,6 +3,7 @@ export const SAVE_DECK_TITLE = 'SAVE_DECK_TITLE'
 export const REMOVE_DECK = 'REMOVE_DECK'
 export const ADD_CARD_TO_DECK = 'ADD_CARD_TO_DECK'
 export const SAVE_ANSWER_SELECTED = 'SAVE_ANSWER_SELECTED'
+export const CLEAR_ANSWER_SELECTED = 'CLEAR_ANSWER_SELECTED'
 
 export function receive_Decks (decks) {
   return {
@@ -38,5 +39,13 @@ export function save_Answer_Selected (title, answer) {
     type: SAVE_ANSWER_SELECTED,
     title,
     answer,
+  }
+}
+
+export function clear_Answer_Selected (title) {
+  console.log('inside actions')
+  return {
+    type: CLEAR_ANSWER_SELECTED,
+    title,
   }
 }

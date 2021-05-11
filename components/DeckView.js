@@ -2,6 +2,9 @@ import React from 'react';
 import { View, Text, TouchableOpacity, Platform, StyleSheet } from 'react-native';
 import { connect } from 'react-redux';
 import { white, purple } from '../utils/colors';
+import { CommonActions } from '@react-navigation/native';
+import { removeDeck, clearAnswerSelected } from '../utils/api'
+import { remove_Deck , clear_Answer_Selected } from '../actions'
 
 function AddCardBtn ({ onPress }) {
   return (
@@ -28,7 +31,9 @@ class DeckView extends React.Component {
     this.props.navigation.navigate('AddCard', {entryId: this.props.deckInfo.title})
   }
   startQuiz = () => {
-    alert("Start quiz Pressed")
+    clearAnswerSelected(this.props.deckInfo.title)
+    this.props.dispatch(clear_Answer_Selected(this.props.deckInfo.title))
+    this.props.navigation.navigate('CardView', {entryId: this.props.deckInfo.title, displayCount: 0})
   }
   render() {
     const { dispatch, deckInfo } = this.props

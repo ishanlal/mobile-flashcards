@@ -3,7 +3,8 @@ import {
   SAVE_DECK_TITLE,
   REMOVE_DECK,
   ADD_CARD_TO_DECK,
-  SAVE_ANSWER_SELECTED
+  SAVE_ANSWER_SELECTED,
+  CLEAR_ANSWER_SELECTED
  } from '../actions'
 
 function decks (state = {}, action) {
@@ -41,6 +42,14 @@ function decks (state = {}, action) {
           [action.title]: {
             ...state[action.title],
             answersSelected: state[action.title].answersSelected.concat(action.answer)
+          }
+        }
+      case CLEAR_ANSWER_SELECTED:
+        return {
+          ...state,
+          [action.title]: {
+            ...state[action.title],
+            answersSelected: []
           }
         }
       default :
