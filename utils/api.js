@@ -50,17 +50,16 @@ export function removeDeck (title) {
     })
 }
 
-export function saveAnswerSelected (title, answer) { //where answer = {ans: 'Correct/Incorrect'}
+export function saveAnswerSelected (title, answer, count) { //where answer = {ans: 'Correct/Incorrect'}
   return AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY)
     .then((results) => {
       const data = JSON.parse(results);
-      data[title].answersSelected.push(answer);
+      data[title].answersSelected[count] = answer;
       AsyncStorage.setItem(FLASHCARDS_STORAGE_KEY, JSON.stringify(data))
     })
 }
 
 export function clearAnswerSelected (title) { //where answer = {ans: 'Correct/Incorrect'}
-  console.log('inside AsyncStorage')
   return AsyncStorage.getItem(FLASHCARDS_STORAGE_KEY)
     .then((results) => {
       const data = JSON.parse(results);

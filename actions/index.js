@@ -34,16 +34,16 @@ export function add_Card_To_Deck (title, card) {
   }
 }
 
-export function save_Answer_Selected (title, answer) {
+export function save_Answer_Selected (title, answer, count) {
   return {
     type: SAVE_ANSWER_SELECTED,
     title,
     answer,
+    count
   }
 }
 
 export function clear_Answer_Selected (title) {
-  console.log('inside actions')
   return {
     type: CLEAR_ANSWER_SELECTED,
     title,

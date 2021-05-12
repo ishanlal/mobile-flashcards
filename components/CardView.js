@@ -42,24 +42,24 @@ class CardView extends React.Component {
   correctPressed = () => {
     const { dispatch, deckInfo, displayCount } = this.props
     // save answerselected in backend
-    saveAnswerSelected(this.props.deckInfo.title, {ans: 'correct'})
-    this.props.dispatch(save_Answer_Selected(this.props.deckInfo.title, {ans: 'correct'}))
+    saveAnswerSelected(deckInfo.title, {ans: 'correct'}, displayCount)
+    dispatch(save_Answer_Selected(deckInfo.title, {ans: 'correct'}, displayCount))
     // store quiz completion date
     // evaluate count with question.length
     if ((displayCount+1) === deckInfo.questions.length) {
       // display results screen if last question
-      this.props.navigation.navigate('QuizResults', { entryId: this.props.deckInfo.title })
+      this.props.navigation.navigate('QuizResults', { entryId: deckInfo.title })
     }
     else {
       // if not push the next question screen
-      this.props.navigation.push('CardView', {entryId: this.props.deckInfo.title, displayCount: (displayCount+1)})
+      this.props.navigation.push('CardView', {entryId: deckInfo.title, displayCount: (displayCount+1)})
     }
   }
   incorrectPressed = () => {
     const { dispatch, deckInfo, displayCount } = this.props
     // save answerselected in backend
-    saveAnswerSelected(this.props.deckInfo.title, {ans: 'incorrect'})
-    this.props.dispatch(save_Answer_Selected(this.props.deckInfo.title, {ans: 'incorrect'}))
+    saveAnswerSelected(this.props.deckInfo.title, {ans: 'incorrect'}, displayCount)
+    this.props.dispatch(save_Answer_Selected(this.props.deckInfo.title, {ans: 'incorrect'}, displayCount))
     // store quiz completion date
     // evaluate count with question.length
     if ((displayCount+1) === deckInfo.questions.length) {
@@ -91,9 +91,9 @@ class CardView extends React.Component {
         )
     }
     return (
-      <View style={styles.container}>
+      <View style={styles.column}>
         <View>
-          <Text>{(displayCount+1)} / {deckInfo.questions.length}</Text>
+          <Text style={styles.Text}>{(displayCount+1)} / {deckInfo.questions.length}</Text>
         </View>
         <View>
           <Animated.View style={[styles.flipCard, frontAnimatedStyle]}>
@@ -107,11 +107,15 @@ class CardView extends React.Component {
         <TouchableOpacity onPress={() => this.flipCard()}>
           <Text>SHOW ANSWER</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.correctPressed}>
-          <Text>CORRECT</Text>
+        <TouchableOpacity
+        style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn}
+        onPress={this.correctPressed}>
+          <Text style={styles.submitBtnText}>CORRECT</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => this.incorrectPressed}>
-          <Text>INCORRECT</Text>
+        <TouchableOpacity
+        style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn}
+        onPress={this.incorrectPressed}>
+          <Text style={styles.submitBtnText}>INCORRECT</Text>
         </TouchableOpacity>
       </View>
     )
@@ -136,6 +140,48 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     position: 'absolute',
     top: 0,
+  },
+  column: {
+    flexDirection: 'column',
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  iosSubmitBtn: {
+    backgroundColor: purple,
+    padding: 10,
+    borderRadius: 7,
+    height: 45,
+    marginLeft: 40,
+    marginRight: 40,
+  },
+  androidSubmitBtn: {
+    backgroundColor: purple,
+    padding: 10,
+    paddingLeft: 30,
+    paddingRight: 30,
+    height: 45,
+    borderRadius: 2,
+    alignSelf: 'flex-end',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  submitBtnText: {
+    color: white,
+    fontSize: 22,
+    textAlign: 'center'
+  },
+  indexText: {
+    color: purple,
+    fontSize: 22,
+    textAlign: 'center'
+  },
+  center: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 30,
+    marginLeft: 30
   }
 })
 

@@ -5,6 +5,7 @@ import { white, purple } from '../utils/colors';
 import { CommonActions } from '@react-navigation/native';
 import { removeDeck, clearAnswerSelected } from '../utils/api'
 import { remove_Deck , clear_Answer_Selected } from '../actions'
+import AppLoading from 'expo-app-loading'
 
 function AddCardBtn ({ onPress }) {
   return (
@@ -26,7 +27,20 @@ function StartQuizBtn ({ onPress }) {
   )
 }
 
+function RemoveDeckBtn ({ onPress }) {
+  return (
+    <TouchableOpacity
+    style={Platform.OS === 'ios' ? styles.iosSubmitBtn : styles.androidSubmitBtn}
+    onPress={onPress}>
+      <Text style={styles.submitBtnText}>REMOVE DECK</Text>
+    </TouchableOpacity>
+  )
+}
+
 class DeckView extends React.Component {
+  state = {
+    ready: true
+  }
   addCard = () => {
     this.props.navigation.navigate('AddCard', {entryId: this.props.deckInfo.title})
   }
@@ -35,7 +49,20 @@ class DeckView extends React.Component {
     this.props.dispatch(clear_Answer_Selected(this.props.deckInfo.title))
     this.props.navigation.navigate('CardView', {entryId: this.props.deckInfo.title, displayCount: 0})
   }
+  removeDeck = () => {
+    const { dispatch, deckInfo } = this.props
+    this.setState(() => ({
+      ready: false
+    }))
+    removeDeck(deckInfo.title)
+    dispatch(remove_Deck(deckInfo.title))
+    this.props.navigation.popToTop()
+  }
   render() {
+    const { ready } = this.state;
+    if (ready === false) {
+        return <AppLoading />
+    }
     const { dispatch, deckInfo } = this.props
     return (
       <View style={styles.column}>
@@ -43,6 +70,7 @@ class DeckView extends React.Component {
         <Text style={{fontSize: 20}}>{deckInfo.questions.length} cards</Text>
         <AddCardBtn onPress={this.addCard} />
         <StartQuizBtn onPress={this.startQuiz} />
+        <RemoveDeckBtn onPress={this.removeDeck} />
       </View>
     )
   }

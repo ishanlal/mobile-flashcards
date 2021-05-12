@@ -2,6 +2,8 @@ import React from 'react'
 import { View, StyleSheet } from 'react-native'
 import { FontAwesome, MaterialIcons, MaterialCommunityIcons } from '@expo/vector-icons'
 import { white, red, orange, blue, lightPurple, pink } from './colors';
+import * as Notifications from 'expo-notifications';
+import * as Permissions from 'expo-permissions';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const NOTIFICATION_KEY = 'UdaciFitness:notifications';
@@ -68,7 +70,7 @@ export function clearLocalNotification() {
 export function createNotification() {
   return {
     title: 'Log your stats!',
-    body: '👋 don\'t forget to log your stats for today!',
+    body: '👋 don\'t forget to do your quiz for today!',
     ios: {
       sound: true,
     },
@@ -93,7 +95,7 @@ export function setLocalNotification() {
 
               let tommorow = new Date();
               tommorow.setDate(tommorow.getDate() + 1);
-              tommorow.setHours(20);
+              tommorow.setHours(8);
               tommorow.setMinutes(0);
 
               Notifications.scheduleNotificationAsync(
