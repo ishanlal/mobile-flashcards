@@ -92,8 +92,7 @@ export default class App extends React.Component {
                   headerStyle: {
                     backgroundColor: purple
                   },
-                  title: route.params.entryId,
-                  headerTitle: route.params.entryId
+                  title: 'Add Card'
                 })} />
             <Stack.Screen
                 name="CardView"
