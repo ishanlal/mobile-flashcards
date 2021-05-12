@@ -17,6 +17,8 @@ This project encompasses the fundamental aspects of building a native applicatio
 
 # Screenshots
 <img src='./DeckList.png' height='50%' width='50%' alt='Decks Screenshot' />
+<img src='./AddDeck.png' height='50%' width='50%' alt='Add Deck Screenshot' />
+<img src='./NewDeck.png' height='50%' width='50%' alt='New Deck Screenshot' />
 <img src='./AddCard.png' height='50%' width='50%' alt='Add Card Screenshot' />
 <img src='./IndividualDeckView.png' height='50%' width='50%' alt='Individual Deck View Screenshot' />
 <img src='./QuizScreen.png' height='50%' width='50%' alt='Quiz Screen Screenshot' />
