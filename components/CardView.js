@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, TouchableOpacity, Animated } from 'react-native
 import { connect } from 'react-redux';
 import { white, purple } from '../utils/colors';
 import { CommonActions } from '@react-navigation/native';
+import { saveAnswerSelected } from '../utils/api'
+import { save_Answer_Selected } from '../actions'
 
 class CardView extends React.Component {
   componentWillMount() {
@@ -40,18 +42,34 @@ class CardView extends React.Component {
   correctPressed = () => {
     const { dispatch, deckInfo, displayCount } = this.props
     // save answerselected in backend
+    saveAnswerSelected(this.props.deckInfo.title, {ans: 'correct'})
+    this.props.dispatch(save_Answer_Selected(this.props.deckInfo.title, {ans: 'correct'}))
     // store quiz completion date
     // evaluate count with question.length
-    // display results screen if last question
-    // if not navigate to next screen
+    if ((displayCount+1) === deckInfo.questions.length) {
+      // display results screen if last question
+      this.props.navigation.navigate('QuizResults', { entryId: this.props.deckInfo.title })
+    }
+    else {
+      // if not push the next question screen
+      this.props.navigation.push('CardView', {entryId: this.props.deckInfo.title, displayCount: (displayCount+1)})
+    }
   }
   incorrectPressed = () => {
     const { dispatch, deckInfo, displayCount } = this.props
     // save answerselected in backend
-    // evaluate count with question.length
+    saveAnswerSelected(this.props.deckInfo.title, {ans: 'incorrect'})
+    this.props.dispatch(save_Answer_Selected(this.props.deckInfo.title, {ans: 'incorrect'}))
     // store quiz completion date
-    // display results screen if last question
-    // if not navigate to next screen
+    // evaluate count with question.length
+    if ((displayCount+1) === deckInfo.questions.length) {
+      // display results screen if last question
+      this.props.navigation.navigate('QuizResults', { entryId: this.props.deckInfo.title })
+    }
+    else {
+      // if not push the next question screen
+      this.props.navigation.push('CardView', {entryId: this.props.deckInfo.title, displayCount: (displayCount+1)})
+    }
   }
   render() {
     const frontAnimatedStyle = {
